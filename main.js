@@ -1,14 +1,14 @@
 //array de productos
 let productos = [
-   {id: 1, nombre: "Hongos de pino", categoria: "natural", rutaImagen: "hongos-pino.jpg", stock: 4, precio: 2200 },
-   {id: 4, nombre: "Aceitunas", categoria: "envasado", rutaImagen: "aceitunas.jpg", stock: 10, precio: 2000 },
-   {id: 7, nombre: "Pasta de mani", categoria: "envasado", rutaImagen: "pasta.mani.jpg", stock: 15, precio: 800},
-   {id: 9, nombre: "Champignones", categoria: "natural", rutaImagen: "hongos-champi.jpg", stock: 6, precio: 1800 },
-   {id: 11, nombre: "Frutos secos", categoria: "natural", rutaImagen: "frutos-secos.jpg", stock: 8, precio: 3500 },
-   {id: 15, nombre: "Fideos secos", categoria: "envasado", stock: 20, precio: 950 },
-   {id: 18, nombre: "Escabeche", categoria: "envasado", rutaImagen: "escabeche.jpg",  stock: 9, precio: 1450 },
-   {id: 24, nombre: "Aceite de oliva extra virgen", categoria: "envasado", rutaImagen: "oliva.jpg",  stock: 10, precio: 2500 },
-   {id: 29, nombre: "Chocolate", categoria: "envasado", rutaImagen: "chocolate.jpg", stock: 14, precio: 900},
+   {id: 1, nombre: "Hongos de pino", categoria: "natural", rutaImagen: "./img/hongos-pino.jpg", stock: 4, precio: 2200 },
+   {id: 4, nombre: "Aceitunas", categoria: "envasado", rutaImagen: "./img/aceitunas.jpg", stock: 10, precio: 2000 },
+   {id: 7, nombre: "Pasta de mani", categoria: "envasado", rutaImagen: "./img/pasta.mani.jpg", stock: 15, precio: 800},
+   {id: 9, nombre: "Champignones", categoria: "natural", rutaImagen: "./img/hongos-champi.jpg", stock: 6, precio: 1800 },
+   {id: 11, nombre: "Frutos secos", categoria: "natural", rutaImagen: "./img/frutos-secos.jpg", stock: 8, precio: 3500 },
+   {id: 15, nombre: "Fideos secos", categoria: "envasado", rutaImagen: "./img/fideos.jpg", stock: 20, precio: 950 },
+   {id: 18, nombre: "Escabeche", categoria: "envasado", rutaImagen: "./img/escabeche.jpg",  stock: 9, precio: 1450 },
+   {id: 24, nombre: "Aceite de oliva extra virgen", categoria: "envasado", rutaImagen: "./img/oliva.jpg",  stock: 10, precio: 2500 },
+   {id: 29, nombre: "Chocolate", categoria: "envasado", rutaImagen: "./img/chocolate.jpg", stock: 14, precio: 900},
 ]
 
 // creacion de tarjetas de productos
@@ -16,7 +16,7 @@ let contenedor = document.getElementById("padre")
 
 crearTarjeta (productos, contenedor)
 
-function crearTarjeta(array) {
+function crearTarjeta(array, contenedor) {
     contenedor.innerHTML = ""
     array.forEach(element => {
     let tarjeta = document.createElement("div")
@@ -25,7 +25,7 @@ function crearTarjeta(array) {
 
     tarjeta.innerHTML = `
     <h3>${element.nombre}</h3>
-    <img src="./img/${productos.rutaImagen}>
+    <img src="${productos.rutaImagen}">
     <h4>$${element.precio}</h4> 
     `
     contenedor.append(tarjeta)
