@@ -2,7 +2,7 @@
 let productos = [
    {id: 1, nombre: "Hongos de pino", categoria: "natural", rutaImagen: "./img/hongos-pino.jpg", stock: 4, precio: 2200 },
    {id: 4, nombre: "Aceitunas", categoria: "envasado", rutaImagen: "./img/aceitunas.jpg", stock: 10, precio: 2000 },
-   {id: 7, nombre: "Pasta de mani", categoria: "envasado", rutaImagen: "./img/pasta.mani.jpg", stock: 15, precio: 800},
+   {id: 7, nombre: "Pasta de mani", categoria: "envasado", rutaImagen: "./img/pasta-mani.jpg", stock: 15, precio: 800},
    {id: 9, nombre: "Champignones", categoria: "natural", rutaImagen: "./img/hongos-champi.jpg", stock: 6, precio: 1800 },
    {id: 11, nombre: "Frutos secos", categoria: "natural", rutaImagen: "./img/frutos-secos.jpg", stock: 8, precio: 3500 },
    {id: 15, nombre: "Fideos secos", categoria: "envasado", rutaImagen: "./img/fideos.jpg", stock: 20, precio: 950 },
@@ -16,16 +16,15 @@ let contenedor = document.getElementById("padre")
 
 crearTarjeta (productos, contenedor)
 
-function crearTarjeta(array, contenedor) {
+function crearTarjeta(array) {
     contenedor.innerHTML = ""
     array.forEach(element => {
     let tarjeta = document.createElement("div")
     tarjeta.classList.add("tarjetaProducto")
 
-
     tarjeta.innerHTML = `
     <h3>${element.nombre}</h3>
-    <img src="${productos.rutaImagen}">
+    <img src="${element.rutaImagen}">
     <h4>$${element.precio}</h4> 
     `
     contenedor.append(tarjeta)

@@ -4,3 +4,37 @@
     box-sizing: 0;
 }
 
+h1{
+    margin: 1.5rem;
+}
+
+main input {
+    margin-left: 2rem;
+}
+
+
+
+footer{
+    text-align: center;
+    padding: 15px;
+    margin: 15px;
+}
+
+#padre{
+    display: flex;
+    margin: 1rem;
+    padding: 2rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.tarjetaProducto {
+    border: black 1.5px solid; 
+    margin: 1rem;
+    padding: 1rem;
+    width: 350px;
+    height: 350px;
+    
+}
+
