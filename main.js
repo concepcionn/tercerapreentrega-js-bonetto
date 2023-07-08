@@ -1,14 +1,14 @@
 //array de productos
 let productos = [
    {id: 1, nombre: "Hongos de pino", categoria: "natural", rutaImagen: "./img/hongos-pino.jpg", stock: 4, precio: 2200 },
-   {id: 4, nombre: "Aceitunas", categoria: "envasado", rutaImagen: "./img/aceitunas.jpg", stock: 10, precio: 2000 },
-   {id: 7, nombre: "Pasta de mani", categoria: "envasado", rutaImagen: "./img/pasta-mani.jpg", stock: 15, precio: 800},
+   {id: 4, nombre: "Aceitunas", categoria: "gourmet", rutaImagen: "./img/aceitunas.jpg", stock: 10, precio: 2000 },
+   {id: 7, nombre: "Pasta de mani", categoria: "gourmet", rutaImagen: "./img/pasta-mani.jpg", stock: 15, precio: 800},
    {id: 9, nombre: "Champignones", categoria: "natural", rutaImagen: "./img/hongos-champi.jpg", stock: 6, precio: 1800 },
    {id: 11, nombre: "Frutos secos", categoria: "natural", rutaImagen: "./img/frutos-secos.jpg", stock: 8, precio: 3500 },
-   {id: 15, nombre: "Fideos secos", categoria: "envasado", rutaImagen: "./img/fideos.jpg", stock: 20, precio: 950 },
-   {id: 18, nombre: "Escabeche", categoria: "envasado", rutaImagen: "./img/escabeche.jpg",  stock: 9, precio: 1450 },
-   {id: 24, nombre: "Aceite de oliva extra virgen", categoria: "envasado", rutaImagen: "./img/oliva.jpg",  stock: 10, precio: 2500 },
-   {id: 29, nombre: "Chocolate", categoria: "envasado", rutaImagen: "./img/chocolate.jpg", stock: 14, precio: 900},
+   {id: 15, nombre: "Fideos secos", categoria: "gourmet", rutaImagen: "./img/fideos.jpg", stock: 20, precio: 950 },
+   {id: 18, nombre: "Escabeche", categoria: "gourmet", rutaImagen: "./img/escabeche.jpg",  stock: 9, precio: 1450 },
+   {id: 24, nombre: "Aceite de oliva extra virgen", categoria: "gourmet", rutaImagen: "./img/oliva.jpg",  stock: 10, precio: 2500 },
+   {id: 29, nombre: "Chocolate", categoria: "gourmet", rutaImagen: "./img/chocolate.jpg", stock: 14, precio: 900},
 ]
 
 // creacion de tarjetas de productos
@@ -18,21 +18,33 @@ crearTarjeta (productos, contenedor)
 
 function crearTarjeta(array) {
     contenedor.innerHTML = ""
+
     array.forEach(element => {
+    let mensaje = element.precio
+    
     let tarjeta = document.createElement("div")
+
+    if (element.stock === 0) {
+        mensaje = "Sin stock"
+    }
+
     tarjeta.classList.add("tarjetaProducto")
 
     tarjeta.innerHTML = `
     <h3>${element.nombre}</h3>
     <img src="${element.rutaImagen}">
-    <h4>$${element.precio}</h4>
-    <a class="btn btn-secondary disabled" role="button" aria-disabled="true">Agregar</a>
+    <h4>$${mensaje}</h4>
+    <a id="${element.id}" class="btn btn-secondary"  role="button" aria-disabled="false">Agregar</a>
     `
     contenedor.append(tarjeta)
+
+    let botonCarrito = document.getElementById(element.id)
+    botonCarrito.addEventListener("click", (e)=>console.log(e.target.id))
 })
 }
 
 //filtro de busqueda
+//por nombre
 let buscador = document.getElementById("buscador")
 buscador.addEventListener("input", filtrar)
 
@@ -42,15 +54,18 @@ function filtrar () {
 }
 
 
+//filtro de botones por categoria
 let botonesFiltro = document.getElementsByClassName("filtro")
-for (const botonFiltro of botonesFiltro){
+    for (const botonFiltro of botonesFiltro){
     botonFiltro.addEventListener("click", filtrarPorCategoria)
-}
+} 
+
 
 function filtrarPorCategoria (event) {
-    console.log(event)
-    
+    let arrayFiltrado = productos.filter(producto => productos.categoria === event.target.value)
+    crearTarjeta(arrayFiltrado) 
 }
+
 
 
 
