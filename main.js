@@ -37,10 +37,20 @@ let buscador = document.getElementById("buscador")
 buscador.addEventListener("input", filtrar)
 
 function filtrar () {
-    let arrayFiltrado = productos.filter(producto => producto.nombre.includes(buscador.value))
+    let arrayFiltrado = productos.filter(producto => producto.nombre.toLowerCase().includes(buscador.value))
     crearTarjeta(arrayFiltrado)
 }
 
+
+let botonesFiltro = document.getElementsByClassName("filtro")
+for (const botonFiltro of botonesFiltro){
+    botonFiltro.addEventListener("click", filtrarPorCategoria)
+}
+
+function filtrarPorCategoria (event) {
+    console.log(event)
+    
+}
 
 
 
