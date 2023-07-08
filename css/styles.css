@@ -2,7 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: 0;
+    font-family: 'Oswald', sans-serif;
 }
+
 
 h1{
     margin: 1.5rem;
@@ -11,8 +13,6 @@ h1{
 main input {
     margin-left: 2rem;
 }
-
-
 
 footer{
     text-align: center;
@@ -30,11 +30,20 @@ footer{
 }
 
 .tarjetaProducto {
-    border: black 1.5px solid; 
-    margin: 1rem;
-    padding: 1rem;
+    border: black 2px solid; 
+    margin: 1.5rem;
+    padding: 1.5rem;
     width: 350px;
     height: 350px;
-    
+    justify-content: center;
+    align-items: center;
 }
+
+.tarjetaProducto img {
+    margin-left: 40px;
+    height: 30vh;
+    width: 15vw;
+}
+
+
 

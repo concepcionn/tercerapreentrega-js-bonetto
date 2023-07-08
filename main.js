@@ -25,7 +25,8 @@ function crearTarjeta(array) {
     tarjeta.innerHTML = `
     <h3>${element.nombre}</h3>
     <img src="${element.rutaImagen}">
-    <h4>$${element.precio}</h4> 
+    <h4>$${element.precio}</h4>
+    <a class="btn btn-secondary disabled" role="button" aria-disabled="true">Agregar</a>
     `
     contenedor.append(tarjeta)
 })
