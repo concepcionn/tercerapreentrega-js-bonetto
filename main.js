@@ -11,10 +11,20 @@ let productos = [
    {id: 29, nombre: "Chocolate", categoria: "gourmet", rutaImagen: "./img/chocolate.jpg", stock: 14, precio: 900},
 ]
 
+//creacion de carrito
+let carrito = []
+let carritoJSON = JSON.parse(localStorage.getItem("carrito"))
+
+if (carritoJSON) {
+    carrito = carritoJSON
+}
+
 // creacion de tarjetas de productos
 let contenedor = document.getElementById("padre")
 
 crearTarjeta (productos, contenedor)
+
+crearCarrito (carritoJSON)
 
 function crearTarjeta(array) {
     contenedor.innerHTML = ""
@@ -38,8 +48,8 @@ function crearTarjeta(array) {
     `
     contenedor.append(tarjeta)
 
-    let botonCarrito = document.getElementById(element.id)
-    botonCarrito.addEventListener("click", (e)=>console.log(e.target.id))
+    let botonAgregarCarrito = document.getElementById(element.id)
+    botonAgregarCarrito.addEventListener("click", agregarAlCarrito)
 })
 }
 
@@ -53,24 +63,49 @@ function filtrar () {
     crearTarjeta(arrayFiltrado)
 }
 
-
 //filtro de botones por categoria
 let botonesFiltro = document.getElementsByClassName("filtro")
     for (const botonFiltro of botonesFiltro){
     botonFiltro.addEventListener("click", filtrarPorCategoria)
 } 
 
-
 function filtrarPorCategoria (event) {
-    let arrayFiltrado = productos.filter(producto => productos.categoria === event.target.value)
+    event.preventDefault()
+    let arrayFiltrado = productos.filter(producto => producto.categoria === event.target.id)
     crearTarjeta(arrayFiltrado) 
 }
 
+//carrito
 
+let botonCarrito = document.getElementById("botonCarrito")
+botonCarrito.addEventListener("click", mostrarOcultar)
 
+function mostrarOcultar() {
+    let padreProd = document.getElementById("padreProd")
+    let carrito = document.getElementById("carrito")
+    padreProd.classList.toggle("oculto")
+    carrito.classList.toggle("oculto")
+}
 
+// agregar al carrito
+function agregarAlCarrito (event) {
+    let productoBuscado = productos.find(prod => prod.id === Number(event.target.id))
+    carrito.push({
+        id: productoBuscado.id,
+        nombre: productoBuscado.nombre,
+        precio: productoBuscado.precio
+    })
+    crearCarrito(carritoJSON)
 
+    localStorage.setItem("carrito", JSON.stringify(carrito))
+}
 
+function crearCarrito (carritoJSON) {
+    let carritoReal = document.getElementById("carrito")
+    carrito.forEach(prod => 
+        carritoReal.innerHTML += `<p>${prod.nombre} ${prod.precio}</p>\n`
+        )
+}
 
 
 

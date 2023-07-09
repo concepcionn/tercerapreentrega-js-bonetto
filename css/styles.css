@@ -47,4 +47,18 @@ footer{
 }
 
 
+#carrito {
+    border: black 1px;
+    width: 400px;
+    height: 400px;
+}
+
+.oculto{
+    display: none;
+}
+
+vista{
+    display: inline-block;
+}
+
 
