@@ -11,6 +11,8 @@ let productos = [
    {id: 29, nombre: "Chocolate", categoria: "gourmet", rutaImagen: "./img/chocolate.jpg", stock: 14, precio: 900},
 ]
 
+
+
 //creacion de carrito
 let carrito = []
 let carritoJSON = JSON.parse(localStorage.getItem("carrito"))
@@ -20,7 +22,9 @@ if (carritoJSON) {
 }
 
 // creacion de tarjetas de productos
-let contenedor = document.getElementById("padre")
+let contenedor = document.getElementById("padreProd")
+
+crearFiltros(productos)
 
 crearTarjeta (productos, contenedor)
 
@@ -64,20 +68,38 @@ function filtrar () {
 }
 
 //filtro de botones por categoria
-let botonesFiltro = document.getElementsByClassName("filtro")
-    for (const botonFiltro of botonesFiltro){
-    botonFiltro.addEventListener("click", filtrarPorCategoria)
-} 
+function crearFiltros (arrayDeElementos) {
+    let filtros = ["principal"]
+    arrayDeElementos.forEach(prod => {
+     if (!filtros.includes(prod.categoria))
+     filtros.push(prod.categoria)
+ })
+ 
+ let contenedorFiltros = document.getElementById("filtros")
+ filtros.forEach(filtro => {
+     let boton = document.createElement("button")
+     boton.id = filtro
+     boton.innerText = filtro
+     contenedorFiltros.append(boton)
+   
+    let botonesFiltro = document.getElementById(filtro)
+    botonesFiltro.addEventListener("click", filtrarPorCategoria)
+})
+}
 
 function filtrarPorCategoria (event) {
-    event.preventDefault()
-    let arrayFiltrado = productos.filter(producto => producto.categoria === event.target.id)
-    crearTarjeta(arrayFiltrado) 
-}
+    if (event.target.id === "principal") {
+        crearTarjeta(productos)
+    } else {
+        let arrayFiltrado = productos.filter(producto => producto.categoria === event.target.id)
+        crearTarjeta(arrayFiltrado) 
+    }
+    
+} 
 
 //carrito
 
-let botonCarrito = document.getElementById("botonCarrito")
+let botonCarrito = document.getElementById("carrito")
 botonCarrito.addEventListener("click", mostrarOcultar)
 
 function mostrarOcultar() {
@@ -199,13 +221,3 @@ function listar (arrayListado){
 
  
  */
-
-
-
-
-    
-
-
-
- 
-
