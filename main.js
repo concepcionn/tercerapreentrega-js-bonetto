@@ -1,7 +1,6 @@
-
-
-//array de productos
-let productos = [
+function programaPrincipal() {
+     //array de productos
+    let productos = [
    {id: 1, nombre: "Hongos de pino", categoria: "natural", rutaImagen: "./img/hongos-pino.jpg", stock: 4, precio: 2200 },
    {id: 4, nombre: "Aceitunas", categoria: "gourmet", rutaImagen: "./img/aceitunas.jpg", stock: 10, precio: 2000 },
    {id: 7, nombre: "Pasta de mani", categoria: "gourmet", rutaImagen: "./img/pasta-mani.jpg", stock: 15, precio: 800},
@@ -13,24 +12,38 @@ let productos = [
    {id: 29, nombre: "Chocolate", categoria: "gourmet", rutaImagen: "./img/chocolate.jpg", stock: 14, precio: 900},
 ]
 
-//creacion de carrito
-let carrito = []
-let carritoJSON = JSON.parse(localStorage.getItem("carrito"))
+    //creacion de carrito
+    let carrito = []
+    let carritoJSON = JSON.parse(localStorage.getItem("carrito"))
 
-if (carritoJSON) {
+    if (carritoJSON) {
     carrito = carritoJSON
+    }
+
+    //filtro de busqueda
+    //por nombre
+    let buscador = document.getElementById("buscador")
+    buscador.addEventListener("input", () => filtrar(productos))
+
+    let contenedorFiltros = document.getElementById("filtros")
+
+    //carrito
+    let botonCarrito = document.getElementById("botonCarrito")
+    botonCarrito.addEventListener("click", mostrarOcultar)
+
+
+    crearFiltros(productos, contenedorFiltros)
+
+    crearTarjeta (productos, carrito)
+
+    crearCarrito (carrito)
 }
+   
+programaPrincipal()
 
-// creacion de tarjetas de productos
-let contenedor = document.getElementById("padre")
-
-crearFiltros(productos)
-
-crearTarjeta (productos, contenedor)
-
-crearCarrito (carrito)
-
-function crearTarjeta(array) {
+function crearTarjeta(array, carrito) {
+    // creacion de tarjetas de productos
+    let contenedor = document.getElementById("padre")
     contenedor.innerHTML = ""
 
     array.forEach(element => {
@@ -53,29 +66,23 @@ function crearTarjeta(array) {
     contenedor.append(tarjeta)
 
     let botonAgregarCarrito = document.getElementById(element.id)
-    botonAgregarCarrito.addEventListener("click", agregarAlCarrito)
+    botonAgregarCarrito.addEventListener("click", () => agregarAlCarrito(array, element.id, carrito))
 })
 }
 
-//filtro de busqueda
-//por nombre
-let buscador = document.getElementById("buscador")
-buscador.addEventListener("input", filtrar)
-
-function filtrar () {
+function filtrar (productos) {
     let arrayFiltrado = productos.filter(producto => producto.nombre.toLowerCase().includes(buscador.value.toLowerCase()))
     crearTarjeta(arrayFiltrado)
 }
 
 //filtro de botones por categoria
-function crearFiltros (arrayDeElementos) {
+function crearFiltros (arrayDeElementos, contenedorFiltros, contenedorTarjetas) {
     let filtros = ["principal"]
     arrayDeElementos.forEach(prod => {
      if (!filtros.includes(prod.categoria))
      filtros.push(prod.categoria)
  })
  
- let contenedorFiltros = document.getElementById("filtros")
  filtros.forEach(filtro => {
      let boton = document.createElement("button")
      boton.id = filtro
@@ -83,22 +90,18 @@ function crearFiltros (arrayDeElementos) {
      contenedorFiltros.append(boton)
    
     let botonesFiltro = document.getElementById(filtro)
-    botonesFiltro.addEventListener("click", filtrarPorCategoria)
+    botonesFiltro.addEventListener("click", (event) => filtrarPorCategoria(event.target.id, arrayDeElementos, contenedorTarjetas))
 })
 }
 
-function filtrarPorCategoria (event) {
-    if (event.target.id === "principal") {
+function filtrarPorCategoria (id, productos) {
+    if (id === "principal") {
         crearTarjeta(productos)
     } else {
-        let arrayFiltrado = productos.filter(producto => producto.categoria === event.target.id)
+        let arrayFiltrado = productos.filter(producto => producto.categoria === id)
         crearTarjeta(arrayFiltrado) 
     }   
 } 
-
-//carrito
-let botonCarrito = document.getElementById("botonCarrito")
-botonCarrito.addEventListener("click", mostrarOcultar)
 
 function mostrarOcultar() {
     let padreProd = document.getElementById("padreProd")
@@ -108,22 +111,31 @@ function mostrarOcultar() {
 }
 
 // agregar al carrito
-function agregarAlCarrito (event) {
-    let productoBuscado = productos.find(prod => prod.id === Number(event.target.id))
-    carrito.push({
-    id: productoBuscado.id,
-    nombre: productoBuscado.nombre,
-    precio: productoBuscado.precio 
+function agregarAlCarrito (productos, id, carrito) {
+    let productoBuscado = productos.find(prod => prod.id === id)
+    let posicionProdEnCarrito = carrito.findIndex(prod => prod.id === id)
+
+    if (posicionProdEnCarrito !== -1) {
+        carrito[posicionProdEnCarrito].unidades++
+        carrito[posicionProdEnCarrito].subtotal = carrito[posicionProdEnCarrito].unidades *  carrito[posicionProdEnCarrito].precioUnitario
+    } else { 
+        carrito.push({
+        id: productoBuscado.id,
+        nombre: productoBuscado.nombre,
+        precioUnitario: productoBuscado.precio,
+        unidades: 1,
+        subtotal: productoBuscado.precio
     })
-    crearCarrito(carrito)
+    }
 
     localStorage.setItem("carrito", JSON.stringify(carrito))
+    crearCarrito(carrito)
 }
 
 function crearCarrito (carrito) {
     let carritoReal = document.getElementById("carrito")
-    carritoJSON.forEach(prod => 
-        carritoReal.innerHTML += `<p>${prod.nombre} ${prod.precio}</p>\n`
+    carrito.forEach(prod => 
+        carritoReal.innerHTML += `<p>${prod.nombre} ${prod.precioUnitario} ${prod.unidades} ${prod.subtotal}</p>\n`
         )
 }
 
