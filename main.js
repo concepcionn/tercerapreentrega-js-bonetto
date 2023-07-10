@@ -117,7 +117,7 @@ function agregarAlCarrito (productos, id, carrito) {
 
     if (posicionProdEnCarrito !== -1) {
         carrito[posicionProdEnCarrito].unidades++
-        carrito[posicionProdEnCarrito].subtotal = carrito[posicionProdEnCarrito].unidades *  carrito[posicionProdEnCarrito].precioUnitario
+        carrito[posicionProdEnCarrito].subtotal = carrito[posicionProdEnCarrito].unidades * carrito[posicionProdEnCarrito].precioUnitario
     } else { 
         carrito.push({
         id: productoBuscado.id,
