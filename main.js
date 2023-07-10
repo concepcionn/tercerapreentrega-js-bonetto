@@ -37,6 +37,9 @@ function programaPrincipal() {
     crearTarjeta (productos, carrito)
 
     crearCarrito (carrito)
+
+    let finalizar = document.getElementById("finalizar")
+    finalizar.addEventListener("click", () => finalizarCompra(carrito))
 }
    
 programaPrincipal()
@@ -105,7 +108,7 @@ function filtrarPorCategoria (id, productos) {
 
 function mostrarOcultar() {
     let padreProd = document.getElementById("padreProd")
-    let carrito = document.getElementById("carrito")
+    let carrito = document.getElementById("contenedorCarrito")
     padreProd.classList.toggle("oculto")
     carrito.classList.toggle("oculto")
 }
@@ -134,11 +137,20 @@ function agregarAlCarrito (productos, id, carrito) {
 
 function crearCarrito (carrito) {
     let carritoReal = document.getElementById("carrito")
+    carritoReal.innerHTML = ""
     carrito.forEach(prod => 
         carritoReal.innerHTML += `<p>${prod.nombre} ${prod.precioUnitario} ${prod.unidades} ${prod.subtotal}</p>\n`
         )
 }
 
+// finalizar compra
+function finalizarCompra (carrito) {
+    let carritoReal = document.getElementById("carrito")
+    carritoReal.innerHTML = ""
+    localStorage.removeItem("carrito")
+    carrito = []
+    crearCarrito([])
+}
 
 
 
