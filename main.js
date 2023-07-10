@@ -1,3 +1,5 @@
+
+
 //array de productos
 let productos = [
    {id: 1, nombre: "Hongos de pino", categoria: "natural", rutaImagen: "./img/hongos-pino.jpg", stock: 4, precio: 2200 },
@@ -11,8 +13,6 @@ let productos = [
    {id: 29, nombre: "Chocolate", categoria: "gourmet", rutaImagen: "./img/chocolate.jpg", stock: 14, precio: 900},
 ]
 
-
-
 //creacion de carrito
 let carrito = []
 let carritoJSON = JSON.parse(localStorage.getItem("carrito"))
@@ -22,7 +22,7 @@ if (carritoJSON) {
 }
 
 // creacion de tarjetas de productos
-let contenedor = document.getElementById("padreProd")
+let contenedor = document.getElementById("padre")
 
 crearFiltros(productos)
 
@@ -93,12 +93,10 @@ function filtrarPorCategoria (event) {
     } else {
         let arrayFiltrado = productos.filter(producto => producto.categoria === event.target.id)
         crearTarjeta(arrayFiltrado) 
-    }
-    
+    }   
 } 
 
 //carrito
-
 let botonCarrito = document.getElementById("botonCarrito")
 botonCarrito.addEventListener("click", mostrarOcultar)
 
@@ -107,24 +105,22 @@ function mostrarOcultar() {
     let carrito = document.getElementById("carrito")
     padreProd.classList.toggle("oculto")
     carrito.classList.toggle("oculto")
-    
-    
 }
 
 // agregar al carrito
 function agregarAlCarrito (event) {
     let productoBuscado = productos.find(prod => prod.id === Number(event.target.id))
     carrito.push({
-        id: productoBuscado.id,
-        nombre: productoBuscado.nombre,
-        precio: productoBuscado.precio
+    id: productoBuscado.id,
+    nombre: productoBuscado.nombre,
+    precio: productoBuscado.precio 
     })
-    crearCarrito(carritoJSON)
+    crearCarrito(carrito)
 
     localStorage.setItem("carrito", JSON.stringify(carrito))
 }
 
-function crearCarrito (carritoJSON) {
+function crearCarrito (carrito) {
     let carritoReal = document.getElementById("carrito")
     carritoJSON.forEach(prod => 
         carritoReal.innerHTML += `<p>${prod.nombre} ${prod.precio}</p>\n`
