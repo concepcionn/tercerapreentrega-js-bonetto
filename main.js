@@ -28,7 +28,7 @@ crearFiltros(productos)
 
 crearTarjeta (productos, contenedor)
 
-crearCarrito (carritoJSON)
+crearCarrito (carrito)
 
 function crearTarjeta(array) {
     contenedor.innerHTML = ""
@@ -63,7 +63,7 @@ let buscador = document.getElementById("buscador")
 buscador.addEventListener("input", filtrar)
 
 function filtrar () {
-    let arrayFiltrado = productos.filter(producto => producto.nombre.toLowerCase().includes(buscador.value))
+    let arrayFiltrado = productos.filter(producto => producto.nombre.toLowerCase().includes(buscador.value.toLowerCase()))
     crearTarjeta(arrayFiltrado)
 }
 
@@ -99,7 +99,7 @@ function filtrarPorCategoria (event) {
 
 //carrito
 
-let botonCarrito = document.getElementById("carrito")
+let botonCarrito = document.getElementById("botonCarrito")
 botonCarrito.addEventListener("click", mostrarOcultar)
 
 function mostrarOcultar() {
@@ -107,6 +107,8 @@ function mostrarOcultar() {
     let carrito = document.getElementById("carrito")
     padreProd.classList.toggle("oculto")
     carrito.classList.toggle("oculto")
+    
+    
 }
 
 // agregar al carrito
@@ -124,7 +126,7 @@ function agregarAlCarrito (event) {
 
 function crearCarrito (carritoJSON) {
     let carritoReal = document.getElementById("carrito")
-    carrito.forEach(prod => 
+    carritoJSON.forEach(prod => 
         carritoReal.innerHTML += `<p>${prod.nombre} ${prod.precio}</p>\n`
         )
 }
