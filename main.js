@@ -139,7 +139,8 @@ function crearCarrito (carrito) {
     let carritoReal = document.getElementById("carrito")
     carritoReal.innerHTML = ""
     carrito.forEach(prod => 
-        carritoReal.innerHTML += `<p>${prod.nombre} ${prod.precioUnitario} ${prod.unidades} ${prod.subtotal}</p>\n`
+        carritoReal.innerHTML += `
+        <p>${prod.nombre} ${prod.precioUnitario} ${prod.unidades} ${prod.subtotal}</p>\n`
         )
 }
 
@@ -149,7 +150,7 @@ function finalizarCompra (carrito) {
     carritoReal.innerHTML = ""
     localStorage.removeItem("carrito")
     carrito = []
-    crearCarrito([])
+    
 }
 
 
