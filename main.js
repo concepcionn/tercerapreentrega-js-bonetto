@@ -135,13 +135,29 @@ function agregarAlCarrito (productos, id, carrito) {
     crearCarrito(carrito)
 }
 
-function crearCarrito (carrito) {
+function crearCarrito (carritoJSON) {
     let carritoReal = document.getElementById("carrito")
-    carritoReal.innerHTML = ""
-    carrito.forEach(prod => 
-        carritoReal.innerHTML += `
-        <p>${prod.nombre} ${prod.precioUnitario} ${prod.unidades} ${prod.subtotal}</p>\n`
-        )
+    carritoReal.innerHTML = `
+        <p>Unidades</p>
+        <p>Nombre</p>
+        <p>Precio</p>
+        <p>Subtotal</p> 
+    `
+
+
+    carritoJSON.forEach(prod => {
+        let elementoCarrito = document.createElement("div")
+        elementoCarrito.classList.add("elementoCarrito")
+        elementoCarrito.innerHTML = `
+            <p>${prod.unidades}<p> 
+            <p>${prod.nombre}</p> 
+            <p>${prod.precioUnitario}</p> 
+            <p>${prod.subtotal}</p>
+        `
+        carritoReal.append(elementoCarrito)
+        
+    })
+        
 }
 
 // finalizar compra

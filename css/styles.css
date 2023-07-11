@@ -46,15 +46,27 @@ footer{
     width: 15vw;
 }
 
-
+ºº
 #carrito {
     border: black 1px solid;
+    display: flex;
+    
+}
+
+#carrito p {
+    padding: 15px;
 }
 
 .oculto{
     display: none;
 }
 
+.elementoCarrito{
+    display: flex;
+}
 
-
+.elementoCarrito p{
+    padding: 15px;
+    flex-direction: column;
+}
 
