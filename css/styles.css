@@ -49,16 +49,14 @@ footer{
 
 #carrito {
     border: black 1px solid;
+}
+
+#carrito a{
+    margin: 15px;
+}
+
+#contenedorCarrito p{
     display: flex;
-    
-}
-
-#carrito p {
-    padding: 15px;
-}
-
-.oculto{
-    display: none;
 }
 
 .elementoCarrito{
@@ -66,7 +64,16 @@ footer{
 }
 
 .elementoCarrito p{
+    display: grid;
+    grid-template-columns: 4fr;
+    grid-template-rows: 4fr;
     padding: 15px;
-    flex-direction: column;
+    margin: 15px;
 }
+
+.oculto{
+    display: none;
+}
+
+
 

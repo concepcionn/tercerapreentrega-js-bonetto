@@ -31,9 +31,7 @@ function programaPrincipal() {
     let botonCarrito = document.getElementById("botonCarrito")
     botonCarrito.addEventListener("click", mostrarOcultar)
 
-    
-
-    crearFiltros(productos, contenedorFiltros)
+    crearFiltros(productos, contenedorFiltros, carrito)
 
     crearTarjeta (productos, carrito)
 
@@ -81,7 +79,7 @@ function filtrar (productos, carrito) {
 }
 
 //filtro de botones por categoria
-function crearFiltros (arrayDeElementos, contenedorFiltros) {
+function crearFiltros (arrayDeElementos, contenedorFiltros, carrito) {
     let filtros = ["principal"]
     arrayDeElementos.forEach(prod => {
      if (!filtros.includes(prod.categoria))
@@ -118,11 +116,11 @@ function mostrarOcultar() {
 // agregar al carrito
 function agregarAlCarrito(productos, id, carrito) {
     console.log(id);
-    let productoBuscado = productos.find(prod => prod.id === id);
-    let posicionProdEnCarrito = carrito.findIndex(prod => prod.id === id);
+    let productoBuscado = productos.find(prod => prod.id === id)
+    let posicionProdEnCarrito = carrito.findIndex(prod => prod.id === id)
 
     if (posicionProdEnCarrito !== -1) {
-        carrito[posicionProdEnCarrito].unidades = (carrito[posicionProdEnCarrito].unidades || 1) + 1
+        carrito[posicionProdEnCarrito].unidades++
         carrito[posicionProdEnCarrito].subtotal = carrito[posicionProdEnCarrito].unidades * carrito[posicionProdEnCarrito].precioUnitario
     } else {
         carrito.push({
@@ -134,6 +132,7 @@ function agregarAlCarrito(productos, id, carrito) {
         });
     }
 
+    lanzarTostada()
     localStorage.setItem("carrito", JSON.stringify(carrito));
     crearCarrito(carrito);
 }
@@ -141,10 +140,10 @@ function agregarAlCarrito(productos, id, carrito) {
 function crearCarrito (carrito) {
     let carritoReal = document.getElementById("carrito")
     carritoReal.innerHTML = `
-        <p>Unidades</p>
-        <p>Nombre</p>
-        <p>Precio</p>
-        <p>Subtotal</p> 
+        <a>Unidades</a>
+        <a>Nombre</a>
+        <a>Precio</a>
+        <a>Subtotal</a> 
     `
 
     carrito.forEach(prod => {
@@ -164,10 +163,17 @@ function crearCarrito (carrito) {
 function finalizarCompra (carrito) {
     let carritoReal = document.getElementById("carrito")
     carritoReal.innerHTML = ""
-    localStorage.removeItem("carrito")
-    
-    crearCarrito([]) 
+    localStorage.clear()
 }
 
+function lanzarTostada () {
+    Toastify({
+        text: "Producto añadido correctamente",
+        duration: 2000,
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+}
 
 
