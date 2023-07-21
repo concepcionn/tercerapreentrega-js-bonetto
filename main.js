@@ -23,7 +23,7 @@ function programaPrincipal() {
     //filtro de busqueda
     //por nombre
     let buscador = document.getElementById("buscador")
-    buscador.addEventListener("input", () => filtrar(productos))
+    buscador.addEventListener("input", () => filtrar(productos, carrito))
 
     let contenedorFiltros = document.getElementById("filtros")
 
@@ -74,10 +74,10 @@ function crearTarjeta(array, carrito) {
     })
 }
 
-function filtrar (productos) {
+function filtrar (productos, carrito) {
     let contenedor = document.getElementById("padre")
     let arrayFiltrado = productos.filter(producto => producto.nombre.toLowerCase().includes(buscador.value.toLowerCase()))
-    crearTarjeta(arrayFiltrado)
+    crearTarjeta(arrayFiltrado, carrito)
 }
 
 //filtro de botones por categoria
@@ -95,16 +95,16 @@ function crearFiltros (arrayDeElementos, contenedorFiltros) {
         contenedorFiltros.append(boton)
    
         let botonesFiltro = document.getElementById(filtro)
-        botonesFiltro.addEventListener("click", (event) => filtrarPorCategoria(event, filtro, arrayDeElementos))
+        botonesFiltro.addEventListener("click", (event) => filtrarPorCategoria(event, filtro, arrayDeElementos, carrito))
     })
 }
 
-function filtrarPorCategoria (event, id, productos) {
+function filtrarPorCategoria (event, id, productos, carrito) {
     if (id === "principal") {
-        crearTarjeta(productos)
+        crearTarjeta(productos, carrito)
     } else {    
         let arrayFiltrado = productos.filter(prod => prod.categoria === id)
-        crearTarjeta(arrayFiltrado) 
+        crearTarjeta(arrayFiltrado, carrito) 
     }   
 } 
 
@@ -116,29 +116,29 @@ function mostrarOcultar() {
 }
 
 // agregar al carrito
-function agregarAlCarrito (productos, id, carrito) {
-    console.log(id)
-    let productoBuscado = productos.find(prod => prod.id === id)
-    let posicionProdEnCarrito = carrito.findIndex(prod => prod.id === id)
+function agregarAlCarrito(productos, id, carrito) {
+    console.log(id);
+    let productoBuscado = productos.find(prod => prod.id === id);
+    let posicionProdEnCarrito = carrito.findIndex(prod => prod.id === id);
 
     if (posicionProdEnCarrito !== -1) {
-        carrito[posicionProdEnCarrito].unidades++
+        carrito[posicionProdEnCarrito].unidades = (carrito[posicionProdEnCarrito].unidades || 1) + 1
         carrito[posicionProdEnCarrito].subtotal = carrito[posicionProdEnCarrito].unidades * carrito[posicionProdEnCarrito].precioUnitario
-    } else { 
+    } else {
         carrito.push({
-        id: productoBuscado.id,
-        nombre: productoBuscado.nombre,
-        precioUnitario: productoBuscado.precio,
-        unidades: 1,
-        subtotal: productoBuscado.precio
-        })
+            id: productoBuscado.id,
+            nombre: productoBuscado.nombre,
+            precioUnitario: productoBuscado.precio,
+            unidades: 1,    
+            subtotal: productoBuscado.precio,
+        });
     }
 
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-    crearCarrito(carrito)
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    crearCarrito(carrito);
 }
 
-function crearCarrito (carritoJSON) {
+function crearCarrito (carrito) {
     let carritoReal = document.getElementById("carrito")
     carritoReal.innerHTML = `
         <p>Unidades</p>
@@ -147,7 +147,7 @@ function crearCarrito (carritoJSON) {
         <p>Subtotal</p> 
     `
 
-    carritoJSON.forEach(prod => {
+    carrito.forEach(prod => {
         let elementoCarrito = document.createElement("div")
         elementoCarrito.classList.add("elementoCarrito")
         elementoCarrito.innerHTML = `
