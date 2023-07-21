@@ -31,10 +31,11 @@ function programaPrincipal() {
     let botonCarrito = document.getElementById("botonCarrito")
     botonCarrito.addEventListener("click", mostrarOcultar)
 
+    let contenedor = document.getElementById("padre")
 
     crearFiltros(productos, contenedorFiltros)
 
-    crearTarjeta (productos, carrito)
+    crearTarjeta (productos, contenedor, carrito)
 
     crearCarrito (carrito)
 
@@ -44,9 +45,8 @@ function programaPrincipal() {
    
 programaPrincipal()
 
-function crearTarjeta(array, carrito) {
-    // creacion de tarjetas de productos
-    let contenedor = document.getElementById("padre")
+function crearTarjeta(array, contenedor, carrito) {
+// creacion de tarjetas de productos
     contenedor.innerHTML = ""
 
     array.forEach(element => {
@@ -115,6 +115,7 @@ function mostrarOcultar() {
 
 // agregar al carrito
 function agregarAlCarrito (productos, id, carrito) {
+    console.log(id)
     let productoBuscado = productos.find(prod => prod.id === id)
     let posicionProdEnCarrito = carrito.findIndex(prod => prod.id === id)
 
@@ -165,7 +166,8 @@ function finalizarCompra (carrito) {
     let carritoReal = document.getElementById("carrito")
     carritoReal.innerHTML = ""
     localStorage.removeItem("carrito")
-    carrito = []
+    
+    crearCarrito([])
     
 }
 
