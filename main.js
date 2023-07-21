@@ -23,7 +23,7 @@ function programaPrincipal() {
     //filtro de busqueda
     //por nombre
     let buscador = document.getElementById("buscador")
-    buscador.addEventListener("input", () => filtrar(productos))
+    buscador.addEventListener("input", () => filtrar(productos, contenedor))
 
     let contenedorFiltros = document.getElementById("filtros")
 
@@ -73,9 +73,9 @@ function crearTarjeta(array, contenedor, carrito) {
 })
 }
 
-function filtrar (productos) {
+function filtrar (productos, contenedor) {
     let arrayFiltrado = productos.filter(producto => producto.nombre.toLowerCase().includes(buscador.value.toLowerCase()))
-    crearTarjeta(arrayFiltrado)
+    crearTarjeta(arrayFiltrado, contenedor)
 }
 
 //filtro de botones por categoria
@@ -97,12 +97,12 @@ function crearFiltros (arrayDeElementos, contenedorFiltros, contenedorTarjetas) 
 })
 }
 
-function filtrarPorCategoria (id, productos) {
+function filtrarPorCategoria (event, id, arrayDeElementos, contenedor) {
     if (id === "principal") {
-        crearTarjeta(productos)
+        crearTarjeta(arrayDeElementos, contenedor)
     } else {
-        let arrayFiltrado = productos.filter(producto => producto.categoria === id)
-        crearTarjeta(arrayFiltrado) 
+        let arrayFiltrado = arrayDeElementos.filter(producto => producto.categoria === id)
+        crearTarjeta(arrayFiltrado, contenedor) 
     }   
 } 
 
