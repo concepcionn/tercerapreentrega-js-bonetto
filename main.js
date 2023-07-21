@@ -31,11 +31,11 @@ function programaPrincipal() {
     let botonCarrito = document.getElementById("botonCarrito")
     botonCarrito.addEventListener("click", mostrarOcultar)
 
-    let contenedor = document.getElementById("padre")
+    
 
     crearFiltros(productos, contenedorFiltros)
 
-    crearTarjeta (productos, contenedor, carrito)
+    crearTarjeta (productos, carrito)
 
     crearCarrito (carrito)
 
@@ -45,8 +45,9 @@ function programaPrincipal() {
    
 programaPrincipal()
 
-function crearTarjeta(array, contenedor, carrito) {
+function crearTarjeta(array, carrito) {
 // creacion de tarjetas de productos
+    let contenedor = document.getElementById("padre")
     contenedor.innerHTML = ""
 
     array.forEach(element => {
@@ -73,13 +74,13 @@ function crearTarjeta(array, contenedor, carrito) {
 })
 }
 
-function filtrar (productos, contenedor) {
+function filtrar (productos) {
     let arrayFiltrado = productos.filter(producto => producto.nombre.toLowerCase().includes(buscador.value.toLowerCase()))
-    crearTarjeta(arrayFiltrado, contenedor)
+    crearTarjeta(arrayFiltrado)
 }
 
 //filtro de botones por categoria
-function crearFiltros (arrayDeElementos, contenedorFiltros, contenedorTarjetas) {
+function crearFiltros (arrayDeElementos, contenedorFiltros) {
     let filtros = ["principal"]
     arrayDeElementos.forEach(prod => {
      if (!filtros.includes(prod.categoria))
@@ -93,16 +94,16 @@ function crearFiltros (arrayDeElementos, contenedorFiltros, contenedorTarjetas) 
      contenedorFiltros.append(boton)
    
     let botonesFiltro = document.getElementById(filtro)
-    botonesFiltro.addEventListener("click", (event) => filtrarPorCategoria(event.target.id, arrayDeElementos, contenedorTarjetas))
+    botonesFiltro.addEventListener("click", (event) => filtrarPorCategoria(event.target.id, arrayDeElementos))
 })
 }
 
-function filtrarPorCategoria (event, id, arrayDeElementos, contenedor) {
+function filtrarPorCategoria (event, id, productos) {
     if (id === "principal") {
-        crearTarjeta(arrayDeElementos, contenedor)
+        crearTarjeta(productos)
     } else {
-        let arrayFiltrado = arrayDeElementos.filter(producto => producto.categoria === id)
-        crearTarjeta(arrayFiltrado, contenedor) 
+        let arrayFiltrado = productos.filter(prod => prod.categoria === id)
+        crearTarjeta(arrayFiltrado) 
     }   
 } 
 
